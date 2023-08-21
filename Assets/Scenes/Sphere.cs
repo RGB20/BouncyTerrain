@@ -12,7 +12,6 @@ public class Sphere : MonoBehaviour
     private int old_TerrainDimX;
     private int old_TerrainDimY;
 
-
     public float pointScale;
     private float old_pointScale = 0.1f;
 
@@ -23,14 +22,20 @@ public class Sphere : MonoBehaviour
     public float XSpacing;
     public float YSpacing;
 
+    private List<List<Vector3>> GridPoints2D;
+
+    public bool LoadPointsInGrid;
+
+    public bool clearPoints;
+    public bool PlayPauseSim;
 
     void Start()
     {
-        sphereObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        sphereObject.transform.localScale = new Vector3(pointScale, pointScale, pointScale);
+       sphereObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+       sphereObject.transform.localScale = new Vector3(pointScale, pointScale, pointScale);
 
-        TerrainDimX = 10;
-        TerrainDimY = 10;
+        TerrainDimX = 20;
+        TerrainDimY = 20;
 
         old_TerrainDimX = 1;
         old_TerrainDimY = 1;
@@ -42,32 +47,93 @@ public class Sphere : MonoBehaviour
 
         XSpacing = 1;
         YSpacing = 1;
-}
+
+        GridPoints2D = new List<List<Vector3>>();
+        LoadPointsInGrid = false;
+
+        clearPoints = false;
+        PlayPauseSim = false;
+    }
+
+    void AddGridPoints()
+    {
+        float XOffset = 0;
+
+        for (int z = 0; z < TerrainDimX; ++z)
+        {
+            XOffset = 0;
+            for (int x = 0; x < TerrainDimY; ++x)
+            {
+                GameObject newGO = Instantiate(sphereObject, new Vector3(XOffset, 0, z), Quaternion.identity);
+                newGO.transform.localScale = new Vector3(pointScale, pointScale, pointScale);
+                newGO.name = x.ToString() + z.ToString();
+                XOffset += XSpacing;
+            }
+        }
+    }
+
+    void UpdateGridPoints() 
+    {
+        float XOffset = 0;
+
+        for (int z = 0; z < TerrainDimX; ++z)
+        {
+            XOffset = 0;
+            for (int x = 0; x < TerrainDimY; ++x)
+            {
+                string gameObjectName = x.ToString() + z.ToString();
+                GameObject newGO = GameObject.Find(gameObjectName);
+                newGO.transform.position = new Vector3(XOffset, Mathf.Sin(Mathf.Deg2Rad * ((x + z) * waveFrequency + Time.fixedTime * 100)), z);
+
+                if (newGO.transform.position.y > 0.5f)
+                    newGO.GetComponent<Renderer>().material.SetColor("_Color", new Color(0.0f, 1.0f, 0.7f, 0.0f));
+                else if (newGO.transform.position.y < 0.5f && newGO.transform.position.y > -0.5f)
+                    newGO.GetComponent<Renderer>().material.SetColor("_Color", new Color(1.0f, 1.0f, 1.0f, 0.0f));
+                else if (newGO.transform.position.y < -0.5f)
+                    newGO.GetComponent<Renderer>().material.SetColor("_Color", new Color(1.0f, 0.0f, 0.0f, 0.0f));
+
+                XOffset += XSpacing;
+            }
+        }
+    }
+
+    void AddGridPointsToList()
+    {
+        GridPoints2D.Clear();
+
+        for (int x = 0; x < TerrainDimX; ++x)
+        {
+            List<Vector3> rowPointsX = new List<Vector3>();
+            for (int y = 0; y < TerrainDimY; ++y)
+            {
+                string gameObjectName = x.ToString() + y.ToString();
+                GameObject newGO = GameObject.Find(gameObjectName);
+                rowPointsX.Add(newGO.transform.position);
+            }
+            GridPoints2D.Add(rowPointsX);
+        }
+
+    }
 
     // Update is called once per frame
     void Update()
     {
-        bool toDelete = false;
-
-        if (old_TerrainDimX != TerrainDimX)
+   /*     if (old_TerrainDimX != TerrainDimX)
         {
-            toDelete = true;
+            clearPoints = true;
         }
 
         if (old_TerrainDimY != TerrainDimY)
         {
-            toDelete = true;
+            clearPoints = true;
         }
 
         if (old_pointScale != pointScale)
         {
-            toDelete = true;
+            clearPoints = true;
         }
 
-        float XOffset = 0;
-        float YOffset = 0;
-
-        if (toDelete == true)
+        if (clearPoints == true)
         {
             for (int x = 0; x < old_TerrainDimX; ++x)
             {
@@ -82,42 +148,20 @@ public class Sphere : MonoBehaviour
             old_TerrainDimY = TerrainDimY;
             old_pointScale = pointScale;
 
-            for (int x = 0; x < TerrainDimX; ++x)
-            {
-                XOffset = 0;
-                for (int y = 0; y < TerrainDimY; ++y)
-                {
-                    GameObject newGO = Instantiate(sphereObject, new Vector3(XOffset,0,YOffset), Quaternion.identity);
-                    newGO.transform.localScale = new Vector3(pointScale, pointScale, pointScale);
-                    newGO.name = x.ToString() + y.ToString();
-                    XOffset += XSpacing;
-                }
-                YOffset += YSpacing;
-            }
+
+            AddGridPoints();
+            clearPoints = false;
         }
 
-        XOffset = 0;
-        YOffset = 0;
+        if (PlayPauseSim == true)
+        { 
+            UpdateGridPoints();
+        }
 
-        for (int x = 0; x < TerrainDimX; ++x)
+        if (LoadPointsInGrid == true)
         {
-            XOffset = 0;
-            for (int y = 0; y < TerrainDimY; ++y)
-            {
-                string gameObjectName = x.ToString() + y.ToString();
-                GameObject newGO = GameObject.Find(gameObjectName);
-                newGO.transform.position = new Vector3(XOffset, Mathf.Sin(Mathf.Deg2Rad * ((x + y) * waveFrequency + Time.fixedTime * 100)), YOffset);
-
-                if (newGO.transform.position.y > 0.5f)
-                    newGO.GetComponent<Renderer>().material.SetColor("_Color", new Color(0.0f, 1.0f, 0.7f, 0.0f));
-                else if (newGO.transform.position.y < 0.5f && newGO.transform.position.y > -0.5f)
-                    newGO.GetComponent<Renderer>().material.SetColor("_Color", new Color(1.0f, 1.0f, 1.0f, 0.0f));
-                else if (newGO.transform.position.y < -0.5f)
-                    newGO.GetComponent<Renderer>().material.SetColor("_Color", new Color(1.0f, 0.0f, 0.0f, 0.0f));
-
-                XOffset += XSpacing;
-            }
-            YOffset += YSpacing;
-        }
+            AddGridPointsToList();
+            LoadPointsInGrid = false;
+        }*/
     }
 }
