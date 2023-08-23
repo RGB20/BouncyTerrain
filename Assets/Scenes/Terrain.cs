@@ -26,6 +26,8 @@ public class Terrain : MonoBehaviour
 
 
     private List<Vector3> terrainVertPos;
+    private List<Color> terrainVertColors;
+    private List<Vector3> terrainVertNormals;
     private List<int> vertexIndex;
 
     private int terrainDimX;
@@ -49,39 +51,50 @@ public class Terrain : MonoBehaviour
             sphereObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
         }
 
-        chunksWidth = 20;
-        chunksHeight = 20;
+        chunksWidth = 100;
+        chunksHeight = 100;
 
-        terrainDimX = 1000;
-        terrainDimZ = 1000;
+        terrainDimX = 50;
+        terrainDimZ = 50;
 
         // Create a Tringulated Mesh from the sequence of points
         //for (int X = 0; )
         terrainVertPos = new List<Vector3>();
+        terrainVertColors = new List<Color>();
+        terrainVertNormals = new List<Vector3>();
 
         float waveFrequency = 10;
         float XOffset = 0;
+        float ZOffset = 0;
         float XSpacing = 0.5f;
+        float ZSpacing = 0.5f;
 
-        for (int z = 0; z < terrainDimZ; ++z)
+        for (uint z = 0; z < terrainDimZ; ++z)
         {
             XOffset = 0;
             for (int x = 0; x < terrainDimX; ++x)
             {
-                terrainVertPos.Add(new Vector3(XOffset, Mathf.Sin(Mathf.Deg2Rad * ((x + z) * waveFrequency + Time.fixedTime * 100)), z));
-                //terrainVertPos.Add(new Vector3(XOffset, 0, z));
+                float YOffset = Mathf.Sin(Mathf.Deg2Rad * ((x + z) * waveFrequency + Time.fixedTime * 100));
+                terrainVertPos.Add(new Vector3(XOffset, YOffset, ZOffset));
+                //terrainVertColors.Add(new Color(z / terrainDimZ, 0.0f, 0.0f));
 
                 if (debugging == true)
                 {
                     // Debugging
-                    GameObject newGO = Instantiate(sphereObject, new Vector3(XOffset, 0, z), Quaternion.identity);
+                    GameObject newGO = Instantiate(sphereObject, new Vector3(XOffset, YOffset, ZOffset), Quaternion.identity);
                     newGO.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
                     newGO.name = x.ToString() + z.ToString();
                 }
 
+                terrainVertColors.Add(new Color(0.0f, 1.0f, 0.0f));
+
                 XOffset += XSpacing;
             }
+            ZOffset += ZSpacing;
         }
+
+        if(debugging)
+            Debug.Log("vertPos : " + terrainVertPos.Count);
 
         vertexIndex = new List<int>();
 
@@ -101,13 +114,20 @@ public class Terrain : MonoBehaviour
             }
         }
 
+        if (debugging == true)
+        {
+            Debug.Log("Vertex Index Count : " + vertexIndex.Count);
+            Debug.Log("Vertex Colors Count : " + terrainVertColors.Count);
+            Debug.Log("Vertex Normals Count : " + terrainVertNormals.Count);
+        }
+
         Mesh mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
         mesh.Clear();
         mesh.vertices = terrainVertPos.ToArray();
         mesh.triangles = vertexIndex.ToArray();
-
-
+        mesh.colors = terrainVertColors.ToArray();
+        mesh.RecalculateNormals();
     }
 
     // Update is called once per frame
