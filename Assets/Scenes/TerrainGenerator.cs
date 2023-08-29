@@ -190,16 +190,20 @@ public class TerrainGenerator : MonoBehaviour
         Perlin perlinNoise = new Perlin();
         debugging = false;
 
-        chunksWidth = 5;
-        chunksHeight = 5;
+        chunksWidth = 4;
+        chunksHeight = 4;
 
-        terrainDimX = 100;
-        terrainDimZ = 100;
+        terrainDimX = 50;
+        terrainDimZ = 50;
 
         float XSpacing = 1f;
         float ZSpacing = 1f;
 
         chunks = new List<Chunk>();
+
+
+        float ZVertPos = 0;
+        float XVertPos = 0;
 
         for (int i = 0; i < chunksHeight; i++)
         {
@@ -227,23 +231,28 @@ public class TerrainGenerator : MonoBehaviour
                 chunk.terrainVertNormals = new List<Vector3>();
 
                 float waveFrequency = 5;
-                float ZOffset = 0;//
+                float ZOffset = 0;
+                ZVertPos = (chunksHeight * i) / (chunksHeight * terrainDimZ); // (-(chunksHeight * terrainDimZ) / 2.0f) + ((float)i * terrainDimZ - i) * ZSpacing;
 
 
                 for (uint z = 0; z < terrainDimZ; z++)
                 {
-                    float XOffset = 0;// 
+                    float XOffset = 0;
+                    XVertPos = (chunksWidth * j) / (chunksWidth * terrainDimX); // (-(chunksWidth * terrainDimX) / 2.0f) + ((float)j * terrainDimX - j) * XSpacing;
                     for (int x = 0; x < terrainDimX; x++)
                     {
-                        float YOffset = (float)perlinNoise.OctavePerlin((double)XOffset/terrainDimX, (double)0.0f, (double)ZOffset/terrainDimZ, 4, 8.0f) * waveFrequency;//// Mathf.Sin(Mathf.Deg2Rad * ((x + z) * waveFrequency + Time.fixedTime * 100));
+                        float perlinHeight = (float)perlinNoise.OctavePerlin((double)XVertPos, (double)0.0f, (double)ZVertPos, 4, 8.0f);
+                        float YOffset = perlinHeight * waveFrequency;//// Mathf.Sin(Mathf.Deg2Rad * ((x + z) * waveFrequency + Time.fixedTime * 100));
 
                         chunk.terrainVertPos.Add(new Vector3(XOffset, YOffset, ZOffset));
 
                         chunk.terrainVertColors.Add(new Color(0.1f, 1.0f, 0.1f));
 
                         XOffset += XSpacing;
+                        XVertPos += XSpacing;
                     }
                     ZOffset += ZSpacing;
+                    ZVertPos += ZSpacing;
                 }
 
                 if (debugging)
