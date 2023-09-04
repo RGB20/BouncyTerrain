@@ -190,8 +190,8 @@ public class TerrainGenerator : MonoBehaviour
         Perlin perlinNoise = new Perlin();
         debugging = false;
 
-        chunksWidth = 4;
-        chunksHeight = 4;
+        chunksWidth = 1;
+        chunksHeight = 1;
 
         terrainDimX = 50;
         terrainDimZ = 50;
@@ -246,7 +246,7 @@ public class TerrainGenerator : MonoBehaviour
 
                         chunk.terrainVertPos.Add(new Vector3(XOffset, YOffset, ZOffset));
 
-                        chunk.terrainVertColors.Add(new Color(0.1f, 1.0f, 0.1f));
+                        chunk.terrainVertColors.Add(new Color(perlinHeight, perlinHeight, perlinHeight));
 
                         XOffset += XSpacing;
                         XVertPos += XSpacing;

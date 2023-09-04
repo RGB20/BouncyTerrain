@@ -132,28 +132,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 90492932}
-  - component: {fileID: 90492929}
+  - component: {fileID: 90492933}
   m_Layer: 6
-  m_Name: TerrainGenerator
+  m_Name: TerrainPatchGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &90492929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 90492928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d57af37b2da155641856e23ca47e8bb4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debugging: 0
-  TerrainChunkGO: {fileID: 1814126623}
 --- !u!4 &90492932
 Transform:
   m_ObjectHideFlags: 0
@@ -169,6 +155,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &90492933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90492928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcdadb119d636c643ace0e34b28cdedd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugging: 0
+  TerrainPatchGO: {fileID: 1814126623}
+  XSpacing: 100
+  ZSpacing: 100
+  patchWidth: 50
+  patchHeight: 50
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,7 +201,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.8113208, g: 0.14848696, b: 0.20610222, a: 1}
+  m_Color: {r: 0.8867924, g: 0.73605394, b: 0.20412956, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -403,7 +407,7 @@ GameObject:
   - component: {fileID: 1814126625}
   - component: {fileID: 1814126624}
   m_Layer: 0
-  m_Name: TerrainChunk
+  m_Name: TerrainPatchGo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

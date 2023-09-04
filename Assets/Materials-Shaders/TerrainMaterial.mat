@@ -8,10 +8,14 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: TerrainMaterial
-  m_Shader: {fileID: 210, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 314c50061c82e0845bb70f0cff2a9f9e, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _GENERATE_NORMALS_HEIGHT
+  - _PARTITIONING_INTEGER
+  - _TESSELLATION_FACTOR_CONSTANT
+  - _TESSELLATION_SMOOTHING_FLAT
   m_InvalidKeywords: []
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
@@ -44,11 +48,23 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _HeightMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MainTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -62,6 +78,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _BackFaceCullTolerance: 3.17
     - _BlendOp: 0
     - _BumpScale: 1
     - _CameraFadingEnabled: 0
@@ -77,13 +94,18 @@ Material:
     - _DstBlend: 0
     - _EmissionEnabled: 0
     - _FlipbookMode: 0
+    - _FrustumCullTolerance: 1.32
+    - _GENERATE_NORMALS: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.277
     - _GlossyReflections: 1
+    - _HeightMapAltitude: 0
     - _LightingEnabled: 1
     - _Metallic: 0.123
     - _Mode: 0
+    - _NormalStrength: 1
     - _OcclusionStrength: 1
+    - _PARTITIONING: 0
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
     - _SoftParticlesEnabled: 0
@@ -91,6 +113,13 @@ Material:
     - _SoftParticlesNearFadeDistance: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _TESSELLATION_FACTOR: 0
+    - _TESSELLATION_SMOOTHING: 0
+    - _TessellationBias: 0
+    - _TessellationFactor: 1
+    - _TessellationFactorVColors: 0
+    - _TessellationSmoothing: 0.724
+    - _TessellationSmoothingVColors: 0
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
