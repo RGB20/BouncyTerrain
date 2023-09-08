@@ -8,15 +8,15 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: TerrainMaterial
-  m_Shader: {fileID: 4800000, guid: 314c50061c82e0845bb70f0cff2a9f9e, type: 3}
+  m_Shader: {fileID: 4800000, guid: 6b9453ee5b5702c458d7847133c633a6, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _GENERATE_NORMALS_HEIGHT
   - _PARTITIONING_INTEGER
+  m_InvalidKeywords:
+  - _GENERATE_NORMALS_HEIGHT
   - _TESSELLATION_FACTOR_CONSTANT
   - _TESSELLATION_SMOOTHING_FLAT
-  m_InvalidKeywords: []
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -93,6 +93,7 @@ Material:
     - _DistortionStrengthScaled: 0
     - _DstBlend: 0
     - _EmissionEnabled: 0
+    - _FactorInside: 1
     - _FlipbookMode: 0
     - _FrustumCullTolerance: 1.32
     - _GENERATE_NORMALS: 1
@@ -126,5 +127,6 @@ Material:
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FactorEdge1: {r: 1, g: 1, b: 1, a: 0}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

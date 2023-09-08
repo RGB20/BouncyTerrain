@@ -173,6 +173,8 @@ MonoBehaviour:
   ZSpacing: 100
   patchWidth: 50
   patchHeight: 50
+  terrainHeightMapWidth: 0
+  terrainHeightMapHeight: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
