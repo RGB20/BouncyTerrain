@@ -16,11 +16,11 @@ public class TerrainPatchGenerator : MonoBehaviour
 
     public GameObject TerrainPatchGO;
 
-    public float XSpacing = 100f;
-    public float ZSpacing = 100f;
+    public float XSpacing;
+    public float ZSpacing;
 
-    public UInt32 patchWidth = 50;
-    public UInt32 patchHeight = 50;
+    public UInt32 patchWidth = 10000;
+    public UInt32 patchHeight = 10000;
 
     public int terrainHeightMapWidth;
     public int terrainHeightMapHeight;
@@ -29,8 +29,8 @@ public class TerrainPatchGenerator : MonoBehaviour
     {
         debugging = false;
 
-        XSpacing = 100f;
-        ZSpacing = 100f;
+        XSpacing = 0.5f;
+        ZSpacing = 0.5f;
 
         float ZVertPos = 0;
         float XVertPos = 0;
@@ -114,11 +114,11 @@ public class TerrainPatchGenerator : MonoBehaviour
         mesh.RecalculateTangents();
 
         // Generate and Apply the perlin noise height map to the terrain mesh
-        terrainHeightMapWidth = 1920;
-        terrainHeightMapHeight = 1920;
+        terrainHeightMapWidth = 1024;
+        terrainHeightMapHeight = 1024;
         TerrainHeightMapGenerator heightMapGenerator = new();
         List<Color> heightMap = heightMapGenerator.GeneratePerlinNoiseMap(terrainHeightMapWidth, terrainHeightMapHeight);
-        Texture2D heightMapTexture = new(terrainHeightMapWidth, terrainHeightMapHeight);
+        Texture2D heightMapTexture = new(terrainHeightMapWidth, terrainHeightMapHeight, TextureFormat.RGBAFloat, -1, false);
         heightMapTexture.SetPixels(heightMap.ToArray(), 0);
         heightMapTexture.Apply(true);
 
