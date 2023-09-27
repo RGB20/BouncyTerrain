@@ -97,7 +97,7 @@ bool ShouldBackFaceCull(float4 p0PositionCS, float4 p1PositionCS, float4 p2Posit
 // Returns true if it should be clipped due to frustum or winding culling
 bool ShouldClipPatch(float4 p0PositionCS, float4 p1PositionCS, float4 p2PositionCS) {
     bool allOutside = IsPointOutOfFrustum(p0PositionCS, _FrustrumCullBias) && IsPointOutOfFrustum(p1PositionCS, _FrustrumCullBias) && IsPointOutOfFrustum(p2PositionCS, _FrustrumCullBias);
-    return allOutside || ShouldBackFaceCull(p0PositionCS, p1PositionCS, p2PositionCS, _BackfacCullBias);
+    return false;// allOutside || ShouldBackFaceCull(p0PositionCS, p1PositionCS, p2PositionCS, _BackfacCullBias);
 }
 
 TessellationControlPoint Vertex(Attributes input) {
@@ -302,7 +302,6 @@ float4 Fragment(Interpolators input) : SV_Target{
     float3x3 tangentToWorld = CreateTangentToWorld(input.normalWS, input.tangentWS.xyz, input.tangentWS.w);
 
     float3 normalWS = normalize(TransformTangentToWorld(normalTS, tangentToWorld)); // Convert to world space
-    //return float4(normalWS, 1.0f);
 
     // Fill the various lighting and surface data structures for the PBR algorithm
     InputData lightingInput = (InputData)0; // Found in URP/Input.hlsl

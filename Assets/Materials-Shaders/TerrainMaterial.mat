@@ -14,7 +14,7 @@ Material:
   m_ValidKeywords:
   - _PARTITIONING_POW2
   m_InvalidKeywords:
-  - _GENERATE_NORMALS_HEIGHT
+  - _GENERATE_NORMALS_MAP
   - _TESSELLATION_FACTOR_CONSTANT
   - _TESSELLATION_SMOOTHING_FLAT
   m_LightmapFlags: 4
@@ -32,16 +32,31 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MainTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _BackFaceCullTolerance: 0.01
     - _BackfacCullBias: 0.3
     - _FactorInside: 1
     - _FrustrumCullBias: 10
+    - _FrustumCullTolerance: 0.01
+    - _GENERATE_NORMALS: 0
     - _HeightMapAltitude: 1
     - _NormalStrength: 1
     - _PARTITIONING: 3
+    - _TESSELLATION_FACTOR: 0
+    - _TESSELLATION_SMOOTHING: 0
     - _TessellationBias: 0
     - _TessellationFactor: 0.03
+    - _TessellationFactorVColors: 0
     - _TessellationSmoothing: 0.3
+    - _TessellationSmoothingVColors: 0
     m_Colors: []
   m_BuildTextureStacks: []

@@ -474,7 +474,7 @@ float4 Fragment(Interpolators input) : SV_Target{
     surface.normalTS = normalTS;
     surface.occlusion = 1;
 
-    return UniversalFragmentPBR(lightingInput, surface);
+    return float4(normalWS, 1.0f);// UniversalFragmentPBR(lightingInput, surface);
 }
 
 #endif

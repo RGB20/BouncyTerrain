@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Rendering.VirtualTexturing;
 
 
@@ -29,8 +31,8 @@ public class TerrainPatchGenerator : MonoBehaviour
     {
         debugging = false;
 
-        XSpacing = 0.5f;
-        ZSpacing = 0.5f;
+        XSpacing = 1.0f;
+        ZSpacing = 1.0f;
 
         float ZVertPos = 0;
         float XVertPos = 0;
@@ -114,13 +116,18 @@ public class TerrainPatchGenerator : MonoBehaviour
         mesh.RecalculateTangents();
 
         // Generate and Apply the perlin noise height map to the terrain mesh
-        terrainHeightMapWidth = 1024;
-        terrainHeightMapHeight = 1024;
+        terrainHeightMapWidth = 1024;// 3053;
+        terrainHeightMapHeight = 1024;// 3054;
         TerrainHeightMapGenerator heightMapGenerator = new();
-        List<Color> heightMap = heightMapGenerator.GeneratePerlinNoiseMap(terrainHeightMapWidth, terrainHeightMapHeight);
         Texture2D heightMapTexture = new(terrainHeightMapWidth, terrainHeightMapHeight, TextureFormat.RGBAFloat, -1, false);
-        heightMapTexture.SetPixels(heightMap.ToArray(), 0);
+
+        byte[] bytes = File.ReadAllBytes("C:\\Users\\rudra\\Downloads\\" + "Image" + ".png");
+
+
+        heightMapTexture.LoadImage(bytes);
+        //heightMapTexture.SetPixels(heightMap.ToArray(), 0);
         heightMapTexture.Apply(true);
+
 
         TerrainPatchGO.GetComponent<Renderer>().material.SetTexture("_HeightMap", heightMapTexture);
         TerrainPatchGO.GetComponent<Renderer>().material.SetTexture("_NormalMap", heightMapTexture);

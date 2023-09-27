@@ -169,6 +169,8 @@ internal class TerrainHeightMapGenerator
             for (int x = 0; x < heightMapWidth; x++)
             {
                 float noiseValue = (float)perlinNoise.OctavePerlin((float) x / heightMapWidth, 0.0f, (float) y / heightMapHeight, 4, 8.0f);
+                if (noiseValue <= 0.4f)
+                    noiseValue = 0.4f;
                 colors.Add(new Color(noiseValue, noiseValue, noiseValue));
             }
         }
